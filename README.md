@@ -1,16 +1,24 @@
 # Code for Livewire bug
 
+[Bug Report Here](https://github.com/livewire/livewire/discussions/8395)
+
+
+
+### Reproduction steps from bug report:
 
 1. Create a basic form in Laravel with validation, and use the `@error()` function to display the error message when failing the validation:
+   
 ```
 <input type="text" name="title" />
 @error('title')
-  {{ $message }}
+{{ $message }}
 @enderror
 ```
 2. Create a Livewire Component that includes an additional blank function
+   
 ```
 <?php
+   
 
 namespace App\Livewire;
 
@@ -26,11 +34,18 @@ class BadComponent extends Component
     {
         return view('livewire.bad-component');
     }
+
 }
+
 ```
+
 3. In the Livewire component, use alpine's `@click.outside` function to call the Livewire function
+
+
 ```
 <div @click.outside="$wire.testAction()">
 </div>
+
 ```
+
 4. Test submitting the form. The form will fail validation but errors will not be displayed. If however the Livewire component is large, the errors may display sometimes, but not all the time.
